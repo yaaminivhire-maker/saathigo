@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SaathiGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12182B;--muted:#566077;--bg:#F4F6FA;--card:#fff;--line:#E3E7EF;--chip:#EBEEF5;--teal:#0B6E5F;--tealbg:#E3F3EF;--indigo:#34369E;--indigobg:#E8E8F7;--amber:#9a5b00;--amberbg:#FDF3E0;--bad:#b3261e;--badbg:#FBECEB}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font:14px/1.45 "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);background:#dfe3ec;display:flex;justify-content:center}
+#phone{width:100%;max-width:430px;height:100%;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;position:relative}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;gap:10px;align-items:center;min-width:0}
+.logo{width:36px;height:36px;flex:none;border-radius:18px;background:linear-gradient(135deg,#0B6E5F,#12907c);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;box-shadow:0 4px 12px rgba(11,110,95,.25)}
+.brand b{display:block;font-size:16px}.brand small{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand>div:last-child{min-width:0}
+.tools{display:flex;gap:8px;align-items:center;flex:none}
+.langsel{min-height:36px;width:auto;padding:4px 8px;border-radius:10px;font:inherit;font-size:13px;font-weight:600;border:1px solid #C9CFDC;background:#fff;color:var(--ink)}
+.iconbtn{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;display:grid;place-items:center;cursor:pointer}
+.agents{display:flex;gap:4px;padding:8px 10px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+.ag{flex:1;min-width:52px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--muted);text-align:center}
+.ag i{width:28px;height:28px;border-radius:14px;background:var(--chip);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700;color:var(--muted);transition:background .2s}
+.ag.work i{background:var(--amberbg);color:var(--amber);animation:pulse 1s infinite}
+.ag.done i{background:var(--teal);color:#fff}.ag.done{color:var(--teal)}
+.ag.fail i{background:var(--badbg);color:var(--bad)}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.scroll{flex:1;overflow-y:auto;padding:14px 16px 20px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.ask{align-self:flex-end;max-width:310px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:16px 16px 4px 16px;animation:pop .22s ease-out}
+.bot{align-self:flex-start;max-width:350px;background:#fff;border:1px solid var(--line);padding:12px 14px;border-radius:16px 16px 16px 4px;box-shadow:0 1px 2px rgba(18,24,43,.05);animation:pop .22s ease-out}
+.bot.wide{align-self:stretch;max-width:100%}
+.who{font-size:11px;font-weight:700;color:var(--teal);margin:6px 2px -4px;letter-spacing:.3px}
+.who.agent{color:var(--indigo)}
+@keyframes pop{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ask,.bot,.ag.work i{animation:none}}
+.typing{display:flex;gap:4px;padding:14px}.typing i{width:6px;height:6px;border-radius:3px;background:#b8c0d0;animation:blink 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:.3}}
+.composer{background:#fff;border-top:1px solid var(--line);padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}.chips:empty{display:none}
+.chip{flex:none;min-height:38px;padding:0 14px;border-radius:19px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font:inherit;font-weight:600;font-size:13px;cursor:pointer}
+.chip.in{border-color:var(--indigo);color:var(--indigo)}.chip:hover{background:var(--tealbg)}
+.cbar{display:flex;gap:8px}
+input,select,textarea{font:inherit;font-size:14px;color:var(--ink);padding:11px 12px;border:1px solid #C9CFDC;border-radius:12px;background:#fff;width:100%;min-height:44px}
+.sendbtn{width:44px;height:44px;flex:none;border:0;border-radius:12px;background:var(--ink);display:grid;place-items:center;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sumrow{display:flex;justify-content:space-between;gap:12px;font-size:13px}.sumrow span:first-child{color:var(--muted)}
+.list{margin:6px 0 0;padding-left:18px;display:grid;gap:3px}
+.trav{text-align:left;display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:2px solid var(--line);border-radius:14px;font:inherit;color:var(--ink);cursor:pointer;width:100%}
+.trav.sel{border-color:var(--teal)}
+.av{width:40px;height:40px;border-radius:20px;background:var(--chip);display:grid;place-items:center;font-weight:700;flex:none}.sel .av{background:var(--teal);color:#fff}
+.trav small{display:block;color:var(--muted);font-size:12px}
+.score{flex:none;text-align:center;font-size:11px;color:var(--muted)}.score b{display:block;font-size:17px;color:var(--teal)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:8px;background:var(--tealbg);color:var(--teal)}.tag.g{background:var(--chip);color:var(--muted)}
+.reason{font-size:12px;color:var(--indigo);margin-top:4px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:10px;background:var(--tealbg);color:var(--teal)}
+.pill.declare,.pill.check{background:var(--amberbg);color:var(--amber)}.pill.restricted{background:var(--badbg);color:var(--bad)}
+.rule{font-size:12px;padding:6px 0;border-top:1px solid var(--line)}.rule:first-of-type{border-top:0}.rule small{color:var(--muted)}
+.fb{display:flex;gap:6px;align-items:center;margin-top:8px;font-size:12px;color:var(--muted)}
+.fb button{border:1px solid var(--line);background:#fff;border-radius:8px;min-width:34px;min-height:30px;cursor:pointer;font-size:14px}
+.fb button.on{background:var(--tealbg);border-color:var(--teal)}
+.msg{padding:10px 12px;border-radius:10px;background:var(--tealbg);color:var(--teal);font-size:13px}.msg.err{background:var(--badbg);color:var(--bad)}.msg.warn{background:var(--amberbg);color:var(--amber)}
+.big{font-size:22px;font-weight:700;color:var(--teal)}
+.sheet{position:absolute;inset:0;background:var(--bg);display:flex;flex-direction:column;z-index:5}
+.sheethead{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.sheethead b{font-size:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.box{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.box:first-child{border-top:0}.box small{display:block;color:var(--muted);font-size:12px}
+.menu a{display:flex;justify-content:space-between;padding:14px 4px;border-top:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600;cursor:pointer}.menu a:first-child{border-top:0}
+label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{min-height:46px;border:0;border-radius:14px;background:var(--teal);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;padding:0 16px}
+.btn.in{background:var(--indigo)}.btn.ink{background:var(--ink)}
+.btn:disabled{opacity:.6;cursor:wait}
+.link{background:none;border:0;color:var(--teal);font:inherit;font-weight:700;cursor:pointer;padding:0}
+h2{font-size:17px;margin:0}p{margin:0}.muted{color:var(--muted);font-size:13px}
+
+.brandtiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-self:stretch;animation:pop .22s ease-out}
+.tile{text-align:left;border:0;border-radius:18px;padding:14px;color:#fff;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-height:150px;box-shadow:0 6px 16px rgba(18,24,43,.12)}
+.tile.sw{background:linear-gradient(150deg,#0B6E5F,#0e8a75)}.tile.vi{background:linear-gradient(150deg,#34369E,#4a4cc0)}
+.tile .tt{font-size:16px;font-weight:700;line-height:1.2}.tile .tg{font-size:11px;font-weight:700;letter-spacing:.4px;opacity:.85;text-transform:uppercase}
+.tile .tl{font-size:12px;opacity:.92;flex:1}.tile .tx{font-size:12px;font-weight:700;align-self:flex-start;background:rgba(255,255,255,.18);padding:3px 10px;border-radius:10px}
+.banner{border-radius:16px;padding:16px;color:#fff;display:flex;flex-direction:column;gap:4px}.banner.sw{background:linear-gradient(150deg,#0B6E5F,#0e8a75)}.banner.vi{background:linear-gradient(150deg,#34369E,#4a4cc0)}
+.banner b{font-size:18px}.banner span{font-size:13px;opacity:.92}.banner small{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;opacity:.85}
+
+.pay{display:flex;flex-direction:column;gap:10px}
+.upibtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:14px;background:#1a73e8;color:#fff;font-weight:700;text-decoration:none;font-size:15px}
+.qr{align-self:center;padding:10px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.qr img,.qr canvas{display:block;width:160px;height:160px}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:500;color:var(--ink);font-size:13px}.chk input{width:20px;min-height:20px;margin-top:2px;flex:none}
+.job{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-top:1px solid var(--line)}.job:first-child{border-top:0}.job small{color:var(--muted);display:block}.job b{display:block}
+.row{display:flex;gap:8px;align-items:center}.row input{flex:1}.code{font-size:20px;letter-spacing:4px;font-weight:700;color:var(--indigo)}
+</style>
+</head>
+<body>
+<div id="phone">
+  <div class="top">
+    <div class="brand"><div class="logo" role="img" aria-label="SaathiGo"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true" style="transform:rotate(45deg)"><path d="M21 15.5v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8.5l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5z"/></svg></div><div><b>SaathiGo</b><small data-i18n="tagline">Your agent for carrying home across borders</small></div></div>
+    <div class="tools">
+      <label for="lang" class="sr">Language</label>
+      <select id="lang" class="langsel"><option value="en">English</option><option value="hi">हिन्दी</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option></select>
+      <button class="iconbtn" id="menuBtn" aria-label="Menu" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#12182B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+
+  <div class="scroll" id="auth">
+    <h2 id="authTitle">Create your account</h2>
+    <p class="muted">Families and travelers both sign up here. Everything is saved in a live database.</p>
+    <form class="card" id="authForm">
+      <div id="signupOnly" style="display:grid;gap:10px">
+        <label>Your name<input id="name" maxlength="60" autocomplete="name"></label>
+        <label>I want to<select id="role"><option value="both">Send and carry</option><option value="family">Send things (family)</option><option value="traveler">Carry things (traveler)</option></select></label>
+      </div>
+      <label>Email<input id="email" type="email" autocomplete="email" required></label>
+      <label>Password, 8 or more characters<input id="password" type="password" minlength="8" required></label>
+      <button class="btn" id="authBtn">Sign up</button>
+      <button type="button" class="link" id="swap">I already have an account</button>
+      <div id="authMsg" class="msg" hidden></div>
+    </form>
+  </div>
+
+  <div id="app" hidden style="display:none;flex:1;min-height:0;flex-direction:column">
+    <div class="agents" id="agents" aria-label="Agents"></div>
+    <div class="scroll" id="thread" aria-live="polite"></div>
+    <div class="composer">
+      <div class="chips" id="chips"></div>
+      <form id="composer" class="cbar">
+        <label for="say" class="sr">Message SaathiGo</label>
+        <input id="say" autocomplete="off" maxlength="600" placeholder="Type your answer">
+        <button aria-label="Send" class="sendbtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></button>
+      </form>
+    </div>
+  </div>
+
+  <div class="sheet" id="menu" hidden>
+    <div class="sheethead"><button class="link" data-close data-i18n="back">Back</button><b data-i18n="menu">Menu</b></div>
+    <div class="scroll"><div class="card menu">
+      <a data-open="requests"><span data-i18n="myRequests">My requests</span><span>›</span></a>
+      <a data-open="travel"><span data-i18n="imTravelling">I am travelling</span><span>›</span></a>
+      <a data-open="swadeshi"><span data-i18n="swadeshi">Swadeshi Dabba</span><span>›</span></a>
+      <a data-open="videshi"><span data-i18n="videshi">Videshi Dabba</span><span>›</span></a>
+      <a id="out"><span data-i18n="signOut">Sign out</span><span>›</span></a>
+    </div></div>
+  </div>
+  <div class="sheet" id="requests" hidden>
+    <div class="sheethead"><button class="link" data-close data-i18n="back">Back</button><b data-i18n="myRequests">My requests</b></div>
+    <div class="scroll"><div class="card" id="orders"></div></div>
+  </div>
+  <div class="sheet" id="travel" hidden>
+    <div class="sheethead"><button class="link" data-close data-i18n="back">Back</button><b data-i18n="imTravelling">I am travelling</b></div>
+    <div class="scroll">
+      <form class="card" id="onboard" hidden>
+        <b data-i18n="onbTitle">Become a SaathiGo traveler</b>
+        <p class="muted" data-i18n="onbText"></p>
+        <label><span data-i18n="langsLabel">Languages you speak</span><input id="oLangs" maxlength="120" placeholder="Tamil, English"></label>
+        <label class="chk"><input type="checkbox" id="r1" required> <span data-i18n="rule1"></span></label>
+        <label class="chk"><input type="checkbox" id="r2" required> <span data-i18n="rule2"></span></label>
+        <label class="chk"><input type="checkbox" id="r3" required> <span data-i18n="rule3"></span></label>
+        <button class="btn in" data-i18n="startCarrying">Start carrying</button>
+      </form>
+      <div class="card" id="pickupsCard"><b data-i18n="myPickups">My pickups</b><div id="pickups"></div></div>
+      <div class="card"><b data-i18n="openReq">Requests on your routes</b><div id="openReqs"></div></div>
+      <form class="card" id="tripForm">
+        <b data-i18n="addTrip">Add a trip</b>
+        <p class="muted" data-i18n="pTrav"></p>
+        <div class="two"><label>From<input id="tFrom" value="Dallas, US" required maxlength="80"></label><label>To<input id="tTo" value="Chennai, India" required maxlength="80"></label></div>
+        <div class="two"><label>Date<input id="tDate" type="date" required></label><label>kg<input id="tKg" type="number" min="1" max="60" step="0.5" value="8" required></label></div>
+        <button class="btn in" id="tripBtn" data-i18n="bTrip">Save my trip</button>
+        <div id="tripMsg" class="msg" hidden></div>
+      </form>
+      <div class="card"><b data-i18n="myTrips">My trips</b><div id="trips"></div></div>
+    </div>
+  </div>
+  <div class="sheet" id="swadeshi" hidden>
+    <div class="sheethead"><button class="link" data-close data-i18n="back">Back</button><b data-i18n="swadeshi">Swadeshi Dabba</b></div>
+    <div class="scroll"><div class="banner sw"><small data-i18n="swTag"></small><b data-i18n="swadeshi">Swadeshi Dabba</b><span data-i18n="swLine"></span></div><div class="card" id="swList"></div></div>
+  </div>
+  <div class="sheet" id="videshi" hidden>
+    <div class="sheethead"><button class="link" data-close data-i18n="back">Back</button><b data-i18n="videshi">Videshi Dabba</b></div>
+    <div class="scroll"><div class="banner vi"><small data-i18n="viTag"></small><b data-i18n="videshi">Videshi Dabba</b><span data-i18n="viLine"></span></div><div class="card" id="viList"></div></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="saathi-i18n.js"></script>
+<script src="saathi.js"></script>
+</body>
+</html>
